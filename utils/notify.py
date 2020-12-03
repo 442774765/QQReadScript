@@ -89,7 +89,7 @@ def dingding_bot(access_token, secret, title, content):
         headers = {'Content-Type': 'application/json;charset=utf-8'}
         data = {
             'msgtype': 'text',
-            'text': {'content': f'\n{title}\n\n{content}'}
+            'text': {'content': f'{title}\n\n{content}'}
         }
         response = requests.post(url=url, data=json.dumps(data), headers=headers).json()
         if not response['errcode']:
@@ -101,9 +101,9 @@ def dingding_bot(access_token, secret, title, content):
         print(f'\n[⚠ /Scripts/utils/notify.py - dingding_bot(access_token, secret, title, content) dingding_bot推送错误]\n{symbol}\n{traceback.format_exc()}{symbol}')
 
 
-def serverJ(sckey, title, content):
+def server_chan(sckey, title, content):
     """
-    serverJ机器人推送
+    serverChan机器人推送
     :param sckey:
     :param title:
     :param content:
@@ -118,7 +118,7 @@ def serverJ(sckey, title, content):
         print(response.text)
     except:
         symbol = '-' * 50
-        print(f'\n[⚠ /Scripts/utils/notify.py - serverJ(sckey, title, content) serverJ推送错误]\n{symbol}\n{traceback.format_exc()}{symbol}')
+        print(f'\n[⚠ /Scripts/utils/notify.py - server_chan(sckey, title, content) serverJ推送错误]\n{symbol}\n{traceback.format_exc()}{symbol}')
 
 
 def send(title, content):
@@ -129,7 +129,7 @@ def send(title, content):
     :return:
     """
     try:
-        config = read()  # 调用utils保重的config.py的read函数
+        config = read()  # 调用utils包中的config.py的read函数
         if config['notify']['enable']:
             # bark
             bark_machine_code = config['notify']['type']['bark']['BARK_MACHINE_CODE']
@@ -154,12 +154,12 @@ def send(title, content):
             else:
                 print('未启用Tg机器人')
 
-            # serverJ
-            sckey = config['notify']['type']['serverJ']['SCKEY']
+            # serverChan
+            sckey = config['notify']['type']['server_chan']['SCKEY']
             if sckey:
-                serverJ(sckey, title, content)
+                server_chan(sckey, title, content)
             else:
-                print('未启用server酱')
+                print('未启用serverChan')
         else:
             print('未启用通知')
     except:

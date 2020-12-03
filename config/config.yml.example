@@ -1,23 +1,26 @@
 name: TNanko's Scripts Config File
 
+# 消息推送
 notify:
-  enable: true
+  enable: true # true（开启消息推送），false（关闭消息推送）
   type:
     bark:
       # ios 在 app store 下载 bark app
+      # bark 推送 url 为 https://api.day.app/xxxxxxxxxxx/这里改成你自己的推送内容，则 xxxxxxxxxxx 为你的 bark 机器码
       BARK_MACHINE_CODE:
     telegram_bot:
       # 未完成
       TG_BOT_TOKEN:
       TG_USER_ID:
     dingding_bot:
-      # 申请钉钉机器人，参考网址 https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq 在"安全设置"中选择"加签"，其他不懂不要勾选
+      # 钉钉机器人，参考教程：https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq 在"安全设置"中选择"加签"（必须勾选），其他不懂不要勾选
       DD_BOT_ACCESS_TOKEN:
       DD_BOT_SECRET:
-    serverJ:
-      # 未完成
+    server_chan:
+      # ServerChan，参考教程：http://sc.ftqq.com/3.version
       SCKEY:
 
+# 脚本配置信息
 jobs:
   qq_reader:
     enable: false
