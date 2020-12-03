@@ -1,0 +1,32 @@
+name: TNanko's Scripts Config File
+
+notify:
+  enable: true
+  type:
+    bark:
+      # ios 在 app store 下载 bark app
+      BARK_MACHINE_CODE:
+    telegram_bot:
+      # 未完成
+      TG_BOT_TOKEN:
+      TG_USER_ID:
+    dingding_bot:
+      # 申请钉钉机器人，参考网址 https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq 在"安全设置"中选择"加签"，其他不懂不要勾选
+      DD_BOT_ACCESS_TOKEN:
+      DD_BOT_SECRET:
+    serverJ:
+      # 未完成
+      SCKEY:
+
+jobs:
+  qq_reader:
+    enable: false
+    notify: true # true 启用通知; false 不启用通知
+    parameters:
+      UPLOAD_TIME: 5 # 单位分钟
+      MAX_READ_TIME: 20 # 每日最大阅读时长（单位小时）
+      ACCOUNTS:
+        # YWSESSION，COOKIE这两项必填，BOOK_URL不填就用默认书籍
+        - YWSESSION:
+          COOKIE:
+          BOOK_URL:
