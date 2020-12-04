@@ -136,7 +136,7 @@ def send(title, content):
             if bark_machine_code:
                 bark(bark_machine_code, title, content)
             else:
-                print('未启用bark')
+                print('未启用 bark')
 
             # dingding
             dd_bot_accsee_token = config['notify']['type']['dingding_bot']['DD_BOT_ACCESS_TOKEN']
@@ -144,7 +144,7 @@ def send(title, content):
             if dd_bot_accsee_token and dd_bot_secret:
                 dingding_bot(access_token=dd_bot_accsee_token, secret=dd_bot_secret, title=title, content=content)
             else:
-                print('未启用钉钉机器人')
+                print('未启用 钉钉机器人')
 
             # telegram_bot
             tg_bot_token = config['notify']['type']['telegram_bot']['TG_BOT_TOKEN']
@@ -152,14 +152,14 @@ def send(title, content):
             if tg_bot_token and tg_user_id:
                 telegram_bot(tg_bot_token=tg_bot_token, tg_user_id=tg_user_id, title=title, content=content)
             else:
-                print('未启用Tg机器人')
+                print('未启用 telegram机器人')
 
             # serverChan
             sckey = config['notify']['type']['server_chan']['SCKEY']
             if sckey:
                 server_chan(sckey, title, content)
             else:
-                print('未启用serverChan')
+                print('未启用 serverChan')
         else:
             print('未启用通知')
     except:
