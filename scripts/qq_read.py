@@ -365,8 +365,7 @@ def qq_read():
     max_read_time = qq_read_config['parameters']['MAX_READ_TIME']
     # 消息推送方式
     notify_mode = qq_read_config['notify_mode']
-    symbol = '=' * 16
-    print(f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}')
+
     if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
         notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
                     content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
@@ -388,6 +387,10 @@ def qq_read():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'mpversion': '0.30.0'
             }
+            symbol = '=' * 16
+            print(
+                f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
+
             start_time = time.time()
             title = f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
             content = ''
@@ -501,9 +504,9 @@ def qq_read():
             if qq_read_config['notify'] and beijing_datetime.hour == 20 and beijing_datetime.minute <= 10:
                 notify.send(title=title, content=content, notify_mode=notify_mode)
             else:
-                print('消息未推送，原因：没到对应的推送时间点或者未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true')
+                print('消息未推送，原因：没到对应的推送时间点或者未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true\n')
     else:
-        print('未执行该任务，如需执行请在配置文件的对应的任务中，将参数enable设置为true')
+        print('未执行该任务，如需执行请在配置文件的对应的任务中，将参数enable设置为true\n')
 
 
 def main():
