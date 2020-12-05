@@ -6,6 +6,23 @@
 # @Site    : https://tnanko.github.io
 # @File    : qq_read.py
 # @Software: PyCharm
+"""
+此脚本使用 Python 语言根据 https://github.com/ziye12/JavaScript/blob/master/qqread.js 改写
+需要自行使用代理软件获取 书籍 url 和 cookie
+1. MitM 添加 hostname=mqqapi.reader.qq.com
+2. 添加改写
+    quanx
+    https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js
+
+    loon
+    http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true, tag=企鹅读书获取cookie
+
+    surge
+    企鹅读书获取cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true
+3. 打开企鹅读书，随便浏览一本数几秒后退出，获取书籍 url 和 headers
+4. 根据抓到的 headers 将 ywsession 和 Cookie 分别填写到配置文件中 YWSESSION 和 COOKIE （不要带引号）
+"""
+
 import sys
 import os
 cur_path = os.path.abspath(os.path.dirname(__file__))
@@ -325,7 +342,7 @@ def read_books(headers, book_url, upload_time):
     """
     findtime = re.compile(r'readTime=(.*?)&read_')
     url = re.sub(findtime.findall(book_url)[0], str(upload_time * 60 * 1000), str(book_url))
-    # url = book_url.replace('readTime=', 'readTime=' + str(30))
+    # url = book_url.replace('readTime=', 'readTime=' + str(upload_time))
     try:
         response = requests.get(url=url, headers=headers).json()
         if response['code'] == 0:
@@ -339,12 +356,6 @@ def read_books(headers, book_url, upload_time):
 
 def qq_read():
     utc_datetime, beijing_datetime = get_standard_time()
-    symbol = '=' * 16
-    print(f'\n{symbol}【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}')
-    if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
-        notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
-                    content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！')
-
     qq_read_config = read()['jobs']['qq_read']
     # 获取config.yml账号信息
     accounts = qq_read_config['parameters']['ACCOUNTS']
@@ -352,6 +363,13 @@ def qq_read():
     upload_time = qq_read_config['parameters']['UPLOAD_TIME']
     # 每天最大阅读时长
     max_read_time = qq_read_config['parameters']['MAX_READ_TIME']
+    # 消息推送方式
+    notify_mode = qq_read_config['notify_mode']
+    symbol = '=' * 16
+    print(f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}')
+    if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
+        notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
+                    content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
 
     # 开启脚本执行
     if qq_read_config['enable']:
@@ -481,9 +499,9 @@ def qq_read():
             print(content)
             # 每天 20:00 - 20:10 发送消息推送
             if qq_read_config['notify'] and beijing_datetime.hour == 20 and beijing_datetime.minute <= 10:
-                notify.send(title=title, content=content)
+                notify.send(title=title, content=content, notify_mode=notify_mode)
             else:
-                print('消息未推送，原因没到对应的推送时间点或者未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true')
+                print('消息未推送，原因：没到对应的推送时间点或者未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true')
     else:
         print('未执行该任务，如需执行请在配置文件的对应的任务中，将参数enable设置为true')
 

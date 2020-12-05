@@ -1,12 +1,9 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
 name: 企鹅读书
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '* * * * */11'
+    - cron: '*/10 * * * *'
   watch:
     type: [started]
 
@@ -14,7 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
-#     if: github.event == 'push'
 
     steps:
       - name: Checkout
