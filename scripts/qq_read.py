@@ -20,7 +20,7 @@
     surge
     企鹅读书获取cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true
 3. 打开企鹅读书，随便浏览一本数几秒后退出，获取书籍 url 和 headers
-4. 根据抓到的 headers 将 ywsession 和 Cookie 分别填写到配置文件中 YWSESSION 和 COOKIE （不要带引号）
+4. 根据抓到的 headers 将 ywsession 和 Cookie 分别填写到配置文件中 YWSESSION 和 COOKIE （不要带引号，注意冒号后面的空格）
 """
 
 import sys
@@ -355,8 +355,12 @@ def read_books(headers, book_url, upload_time):
 
 
 def qq_read():
-    utc_datetime, beijing_datetime = get_standard_time()
-    qq_read_config = read()['jobs']['qq_read']
+    try:
+        # 读取企鹅阅读配置
+        qq_read_config = read()['jobs']['qq_read']
+    except:
+        print('配置文件中没有此任务！请更新您的配置文件')
+        return
     # 获取config.yml账号信息
     accounts = qq_read_config['parameters']['ACCOUNTS']
     # 每次上传的时间
@@ -366,6 +370,7 @@ def qq_read():
     # 消息推送方式
     notify_mode = qq_read_config['notify_mode']
 
+    utc_datetime, beijing_datetime = get_standard_time()
     if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
         notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
                     content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
@@ -496,15 +501,21 @@ def qq_read():
                 read_book = read_books(headers=headers, book_url=book_url, upload_time=upload_time)
                 if read_book:
                     content += f'\n【阅读时长】成功增加{upload_time}分钟阅读时长'
+            else:
+                content += f'\n【阅读时长】已达到设置的对大阅读时长，故不增加阅读时长'
 
             content += f'\n🕛耗时：%.2f秒' % (time.time() - start_time)
             print(title)
             print(content)
-            # 每天 20:00 - 20:10 发送消息推送
-            if qq_read_config['notify'] and beijing_datetime.hour == 20 and beijing_datetime.minute <= 10:
+            # 每天 22:00 - 22:10 发送消息推送
+            if qq_read_config['notify'] and beijing_datetime.hour == 22 and beijing_datetime.minute <= 10:
                 notify.send(title=title, content=content, notify_mode=notify_mode)
+            elif not qq_read_config['notify']:
+                print('未进行消息推送，原因：未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true\n')
+            elif not beijing_datetime.hour == 0:
+                print('未进行消息推送，原因：没到对应的推送时间点\n')
             else:
-                print('消息未推送，原因：没到对应的推送时间点或者未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true\n')
+                print('未在规定的时间范围内\n')
     else:
         print('未执行该任务，如需执行请在配置文件的对应的任务中，将参数enable设置为true\n')
 
