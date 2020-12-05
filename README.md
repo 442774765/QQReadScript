@@ -1,8 +1,6 @@
 ## 描述
 一个使用 `Python` 语言写的薅羊毛脚本仓库，支持 `github action` 和 `linux/windows virtual private server` 
 
-目前还在开发阶段，等待更新  
-
 ## 部署方式
 **注意**：所有脚本任务都是未启用并且默认不发消息推送，请自行根据自身需求设置，配置文件采用 `yaml` 语法编写，建议使用文本编辑器填写配置，以防格式错误！  
 ### linux/windows virtual private server
@@ -21,3 +19,6 @@
 ## 消息推送
 目前支持 `ios bark app` ， `telegarm bot` ， `dingding bot` ， `serverJ` 四种方式推送消息。    
 打开推送方式：将 `config.yml` 里面 `notify` 选项中，参数 `enable` 设置为 `true`    
+
+## 支持的脚本任务
+* 企鹅读书 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py
