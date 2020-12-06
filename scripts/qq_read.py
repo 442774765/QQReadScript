@@ -364,14 +364,17 @@ def qq_read():
         return
     # 脚本版本检测
     try:
-        if qq_read_config['skip_check_version']:
-            print('跳过脚本版本检测...')
-        elif config_latest and config_latest['jobs']['qq_read']['version'] > qq_read_config['version']:
-            print(f"检测到最新的脚本版本号为{config_latest['jobs']['qq_read']['version']}，当前脚本版本号：{qq_read_config['version']}")
+        if qq_read_config['skip_check_script_version']:
+            print('参数 skip_check_script_version = true ，跳过脚本版本检测...')
+        elif config_latest:
+            if config_latest['jobs']['qq_read']['version'] > qq_read_config['version']:
+                print(f"检测到最新的脚本版本号为{config_latest['jobs']['qq_read']['version']}，当前脚本版本号：{qq_read_config['version']}")
+            else:
+                print('当前脚本为最新版本')
         else:
-            print('跳过脚本版本检测...')
+            print('未获取到最新脚本的版本号')
     except:
-        print('跳过脚本版本检测...')
+        print('程序运行异常，跳过脚本版本检测...')
     # 获取config.yml账号信息
     accounts = qq_read_config['parameters']['ACCOUNTS']
     # 每次上传的时间
