@@ -129,7 +129,7 @@ def send(title, content, notify_mode):
     :return:
     """
     try:
-        config = read()  # 调用utils包中的config.py的read函数
+        config_latest, config = read(skip_check_version=True)  # 调用utils包中的config.py的read函数并且跳过版本检测
         if config['notify']['enable']:
             for i in notify_mode:
                 if i == 'bark':

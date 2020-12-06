@@ -50,7 +50,7 @@ def compare_version(config_latest, config_current):
         print('程序运行异常，跳过配置文件版本检测...')
         return None, config_current
 
-def read():
+def read(skip_check_version=False):
     """
     支持 github action 和本地文件读取（github action 未测试）
     :return: 返回配置信息
@@ -58,17 +58,21 @@ def read():
     if 'CONFIG' in os.environ:
         config_current = yaml.load(os.environ['CONFIG'], Loader=yaml.FullLoader)
         # 配置文件的版本检测
-        config_latest = check_version()
-        config_latest, config_current = compare_version(config_latest=config_latest, config_current=config_current)
+        config_latest = None
+        if not skip_check_version:
+            config_latest = check_version()
+            config_latest, config_current = compare_version(config_latest=config_latest, config_current=config_current)
         # 报错或者跳过版本检测直接返回当前配置
         return config_latest, config_current
     else:
         path = BASE_DIR + '/config/config.yml'
         with open(path, mode='r', encoding='utf-8') as obj:
             config_current = yaml.load(obj, Loader=yaml.FullLoader)  # <class 'dict'>
-            # 配置文件的版本检测
-            config_latest = check_version()
-            config_latest, config_current = compare_version(config_latest=config_latest, config_current=config_current)
+            config_latest = None
+            if not skip_check_version:
+                # 配置文件的版本检测
+                config_latest = check_version()
+                config_latest, config_current = compare_version(config_latest=config_latest, config_current=config_current)
             return config_latest, config_current
 
 
