@@ -19,8 +19,7 @@
 
     surge
     企鹅读书获取cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true
-3. 打开企鹅读书，随便浏览一本数几秒后退出，获取书籍 url 和 headers
-4. 根据抓到的 headers 将 ywsession 和 Cookie 分别填写到配置文件中 YWSESSION 和 COOKIE （不要带引号，注意冒号后面的空格）
+3. 随意浏览一本数，将抓到的 headers 和 书籍 url 分别填到配置文件对应任务的 HEADERS 和 BOOK_URL （注意冒号后面的空格，不要带引号！）
 """
 
 import sys
@@ -379,22 +378,10 @@ def qq_read():
     if qq_read_config['enable']:
         for account in accounts:
             book_url = account['BOOK_URL']
-            headers = {
-                'Accept': '*/*',
-                'ywsession': account['YWSESSION'],
-                'Connection': 'keep-alive',
-                'Content-Type': 'application/json',
-                'Cookie': account['COOKIE'],
-                'Host': 'mqqapi.reader.qq.com',
-                'User-Agent': 'QQ/8.4.17.638 CFNetwork/1197 Darwin/20.0.0',
-                'Referer': 'https://appservice.qq.com/1110657249/0.30.0/page-frame.html',
-                'Accept-Language': 'zh-cn',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'mpversion': '0.30.0'
-            }
+            headers = account['HEADERS']
+            utc_datetime, beijing_datetime = get_standard_time()
             symbol = '=' * 16
-            print(
-                f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
+            print(f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
 
             start_time = time.time()
             title = f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
