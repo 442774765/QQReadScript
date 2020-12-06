@@ -13,6 +13,7 @@ root_path = os.path.split(cur_path)[0]
 sys.path.append(root_path)
 import yaml
 import requests
+import traceback
 from setup import BASE_DIR
 
 def check_version():
@@ -23,11 +24,12 @@ def check_version():
     # url = 'https://cdn.jsdelivr.net/gh/TNanko/Scripts/master/config/config.yml.example'
     url = 'https://raw.fastgit.org/TNanko/Scripts/master/config/config.yml.example'
     try:
-        response = requests.get(url=url, headers={'Connection': 'close'}).text
+        response = requests.get(url=url, headers={'Connection': 'close'}, timeout=(5, 10)).text
         config_latest = yaml.load(response, Loader=yaml.FullLoader)  # <class 'dict'>
+        print('获取最新配置文件版本成功！')
         return config_latest
     except:
-        print('获取最新配置文件版本失败！请检查当前网络是否可以访问 github')
+        print('请求超时，获取最新配置文件版本失败！请检查当前网络是否可以访问 github')
         return
 
 def compare_version(config_latest, config_current):
@@ -67,7 +69,7 @@ def read():
             # 配置文件的版本检测
             config_latest = check_version()
             config_latest, config_current = compare_version(config_latest=config_latest, config_current=config_current)
-            return None, config_current
+            return config_latest, config_current
 
 
 if __name__ == '__main__':
