@@ -45,12 +45,12 @@ def read():
                 if config_latest and config_current['version'] < config_latest['version']:
                     print(f"检测到最新的配置文件版本号为{config_latest['version']}，当前配置文件版本号：{config_current['version']}，可能出现新的脚本配置或者当前版本配置变更\n访问 https://raw.githubusercontent.com/TNanko/Scripts/master/config/config.yml.example 查看最新配置文件")
                 else:
-                    print('跳过版本检测...')
+                    print('跳过配置文件版本检测...')
                 return config_latest, config_current
             else:
-                print('跳过版本检测...')
+                print('跳过配置文件版本检测...')
         except:
-            print('跳过版本检测...')
+            print('跳过配置文件版本检测...')
         # 报错或者跳过版本检测直接返回当前配置
         return None, config_current
     else:
@@ -65,12 +65,12 @@ def read():
                     if config_latest and config_current['version'] < config_latest['version']:
                         print(f"检测到最新的配置文件版本号为{config_latest['version']}，当前配置文件版本号：{config_current['version']}，可能出现新的脚本配置或者当前版本配置变更\n访问 https://raw.githubusercontent.com/TNanko/Scripts/master/config/config.yml.example 查看最新配置文件")
                     else:
-                        print('跳过版本检测...')
+                        print('跳过配置文件版本检测...')
                     return config_latest, config_current
                 else:
-                    print('跳过版本检测...')
+                    print('跳过配置文件版本检测...')
             except:
-                print('跳过版本检测...')
+                print('跳过配置文件版本检测...')
             return None, config_current
 
 

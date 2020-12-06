@@ -368,6 +368,8 @@ def qq_read():
             print('跳过脚本版本检测...')
         elif config_latest and config_latest['jobs']['qq_read']['version'] > qq_read_config['version']:
             print(f"检测到最新的脚本版本号为{config_latest['jobs']['qq_read']['version']}，当前脚本版本号：{qq_read_config['version']}")
+        else:
+            print('跳过脚本版本检测...')
     except:
         print('跳过脚本版本检测...')
     # 获取config.yml账号信息
