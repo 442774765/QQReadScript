@@ -133,8 +133,8 @@ def read_time_reward_tasks(headers, seconds):
     url = f'https://mqqapi.reader.qq.com/mqq/red_packet/user/read_time_reward?seconds={seconds}'
     try:
         response = requests.get(url=url, headers=headers).json()
-        print('阅读奖励')
-        pretty_dict(response)
+        # print('阅读奖励')
+        # pretty_dict(response)
         if response['code'] == 0:
             return response['data']
         else:
