@@ -31,6 +31,7 @@ import json
 import re
 import time
 import requests
+import yaml
 import traceback
 from setup import get_standard_time
 from utils import notify
@@ -354,12 +355,21 @@ def read_books(headers, book_url, upload_time):
 
 
 def qq_read():
+    config_latest, config_current = read()
+    # 读取企鹅阅读配置
     try:
-        # 读取企鹅阅读配置
-        qq_read_config = read()['jobs']['qq_read']
+        qq_read_config = config_current['jobs']['qq_read']
     except:
         print('配置文件中没有此任务！请更新您的配置文件')
         return
+    # 脚本版本检测
+    try:
+        if qq_read_config['skip_check_version']:
+            print('跳过脚本版本检测...')
+        elif config_latest and config_latest['jobs']['qq_read']['version'] > qq_read_config['version']:
+            print(f"检测到最新的脚本版本号为{config_latest['jobs']['qq_read']['version']}，当前脚本版本号：{qq_read_config['version']}")
+    except:
+        print('跳过脚本版本检测...')
     # 获取config.yml账号信息
     accounts = qq_read_config['parameters']['ACCOUNTS']
     # 每次上传的时间
@@ -374,7 +384,7 @@ def qq_read():
         notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
                     content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
 
-    # 开启脚本执行
+    # 确定脚本是否开启执行模式
     if qq_read_config['enable']:
         for account in accounts:
             book_url = account['BOOK_URL']

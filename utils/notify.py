@@ -136,7 +136,7 @@ def send(title, content, notify_mode):
                     # bark
                     bark_machine_code = config['notify']['type']['bark']['BARK_MACHINE_CODE']
                     if bark_machine_code:
-                        bark(bark_machine_code, title, content)
+                        bark(bark_machine_code=bark_machine_code, title=title, content=content)
                     else:
                         print('未启用 bark')
                     continue
