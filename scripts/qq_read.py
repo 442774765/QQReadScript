@@ -7,19 +7,28 @@
 # @File    : qq_read.py
 # @Software: PyCharm
 """
-此脚本使用 Python 语言根据 https://github.com/ziye12/JavaScript/blob/master/qqread.js 改写
-需要自行使用代理软件获取 书籍 url 和 cookie
+此脚本使用 Python 语言根据 https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js 改写
+需要自行使用代理软件获取 书籍 url ， headers 和 body
 1. MitM 添加 hostname=mqqapi.reader.qq.com
 2. 添加改写
-    quanx
-    https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js
+    圈x
+    #企鹅读书获取更新body
+    https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track url script-request-body https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js
+    #企鹅读书获取时长cookie
+    https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js
 
     loon
-    http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true, tag=企鹅读书获取cookie
+    //企鹅读书获取更新body
+    http-request https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,requires-body=true, tag=企鹅读书获取更新body
+    //企鹅读书获取时长cookie
+    http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js, requires-header=true, tag=企鹅读书获取时长cookie
 
     surge
-    企鹅读书获取cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/qqread.js, requires-header=true
-3. 随意浏览一本数，将抓到的 headers 和 书籍 url 分别填到配置文件对应任务的 HEADERS 和 BOOK_URL （注意冒号后面的空格，不要带引号！）
+    //企鹅读书获取更新body
+    企鹅读书获取更新body = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,
+    //企鹅读书获取时长cookie
+    企鹅读书获取时长cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,
+3. 进书库选择一本书，看10秒以下，然后退出，获取书籍 url 和 headers 以及 body，看书一定不能超过10秒， 将获取到的值对应填入配置文件里面的 BOOK_URL，HEADERS 和 BODY （注意冒号后面的空格，不要带引号！）
 """
 
 import sys
@@ -31,7 +40,6 @@ import json
 import re
 import time
 import requests
-import yaml
 import traceback
 from setup import get_standard_time
 from utils import notify
@@ -353,6 +361,23 @@ def read_books(headers, book_url, upload_time):
         print(traceback.format_exc())
         return
 
+def track(headers, body):
+    """
+    数据追踪，解决1金币问题
+    :param headers:
+    :param body:
+    :return:
+    """
+    try:
+        url = 'https://mqqapi.reader.qq.com/log/v4/mqq/track'
+        response = requests.post(url=url, headers=headers, data=json.dumps(body)).json()
+        if response['code'] == 0:
+            return True
+        else:
+            return
+    except:
+        print(traceback.format_exc())
+        return
 
 def qq_read():
     config_latest, config_current = read()
@@ -394,6 +419,7 @@ def qq_read():
         for account in accounts:
             book_url = account['BOOK_URL']
             headers = account['HEADERS']
+            body = account['BODY']
             utc_datetime, beijing_datetime = get_standard_time()
             symbol = '=' * 16
             print(f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
@@ -494,7 +520,7 @@ def qq_read():
             # 宝箱金币奖励翻倍
             daily_tasks = get_daily_tasks(headers=headers)
             if daily_tasks['treasureBox']['videoDoneFlag'] == 0:
-                treasure_box_ads_reward = watch_treasure_box_ads(headers=headers)  # 这边有点问题
+                treasure_box_ads_reward = watch_treasure_box_ads(headers=headers)
                 if treasure_box_ads_reward:
                     content += f"\n【宝箱奖励翻倍】获得{treasure_box_ads_reward['amount']}金币"
 
@@ -505,6 +531,12 @@ def qq_read():
                     content += f'\n【阅读时长】成功增加{upload_time}分钟阅读时长'
             else:
                 content += f'\n【阅读时长】已达到设置的对大阅读时长，故不增加阅读时长'
+
+            track_result = track(headers=headers, body=body)
+            if track_result:
+                content += f'\n【数据跟踪】跟踪成功！'
+            else:
+                content += f'\n【数据跟踪】跟踪失败！请重新抓取你的参数 body '
 
             content += f'\n🕛耗时：%.2f秒' % (time.time() - start_time)
             print(title)

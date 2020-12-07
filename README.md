@@ -25,3 +25,7 @@
 
 ## 支持的脚本任务
 * 企鹅读书 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py
+  <details>
+  <summary>教程</summary>
+  进入脚本地址 https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py 获取参数，然后根据 https://raw.githubusercontent.com/TNanko/Scripts/master/config/config.yml.example 将参数填入对应的位置并且配置其他设置。
+  </details>
