@@ -381,7 +381,7 @@ def track(headers, body):
 
 def qq_read():
     config_latest, config_current = read()
-    # 读取企鹅阅读配置
+    # 读取企鹅读书配置
     try:
         qq_read_config = config_current['jobs']['qq_read']
     except:
@@ -411,7 +411,7 @@ def qq_read():
 
     utc_datetime, beijing_datetime = get_standard_time()
     if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
-        notify.send(title=f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
+        notify.send(title=f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
                     content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
 
     # 确定脚本是否开启执行模式
@@ -422,10 +422,10 @@ def qq_read():
             body = account['BODY']
             utc_datetime, beijing_datetime = get_standard_time()
             symbol = '=' * 16
-            print(f'\n{symbol}【企鹅阅读】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
+            print(f'\n{symbol}【企鹅读书】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
 
             start_time = time.time()
-            title = f'☆【企鹅阅读】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
+            title = f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
             content = ''
 
             # 获取用户信息（昵称）

@@ -29,3 +29,4 @@
   <summary>教程</summary>
   进入脚本地址 https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py 获取参数，然后根据 https://raw.githubusercontent.com/TNanko/Scripts/master/config/config.yml.example 将参数填入对应的位置并且配置其他设置。
   </details>
+* `bilibili` 签到 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/bilibili.py

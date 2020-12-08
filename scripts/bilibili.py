@@ -6,6 +6,11 @@
 # @Site    : https://tnanko.github.io
 # @File    : bilibili.py
 # @Software: PyCharm
+"""
+1.访问网站 http://live.bilibili.com/ 并登录你的 bilibili 账号
+2.1 以 Chrome 浏览器为例，按 F12 进入调试模式，在调试窗口上方选择 Network ，刷新一下网页，随意点下方一个文件，然后找到 Cookie 并复制到配置文件中参数 COOKIE
+2.2 如果你使用 圈x 、 Surge 、 Loon 或者 Shadowrocket 等代理软件，可以使用访问网页 https://github.com/chavyleung/scripts/tree/master/bilibili 并使用此网页提供的方法来获取 Cookie
+"""
 import sys
 import os
 cur_path = os.path.abspath(os.path.dirname(__file__))
@@ -19,6 +24,7 @@ from setup import get_standard_time
 from utils import notify
 from utils.configuration import read
 
+
 def pretty_dict(dict):
     """
     格式化输出 json 或者 dict 格式的变量
@@ -26,6 +32,7 @@ def pretty_dict(dict):
     :return:
     """
     return print(json.dumps(dict, indent=4, ensure_ascii=False))
+
 
 def sign(headers):
     url = 'https://api.live.bilibili.com/sign/doSign'
@@ -42,6 +49,7 @@ def sign(headers):
         print(traceback.format_exc())
         return
 
+
 def get_sign_info(headers):
     url = 'https://api.live.bilibili.com/sign/GetSignInfo'
     try:
@@ -55,15 +63,29 @@ def get_sign_info(headers):
         print(traceback.format_exc())
         return
 
+
 def bilibili():
     # 读取 bilibili 配置
     config_latest, config_current = read()
     try:
         bilibili_config = config_current['jobs']['bilibili']
     except:
-        print(traceback.format_exc())
         print('配置文件中没有此任务！请更新您的配置文件')
         return
+    # 脚本版本检测
+    try:
+        if bilibili_config['skip_check_script_version']:
+            print('参数 skip_check_script_version = true ，跳过脚本版本检测...')
+        elif config_latest:
+            if config_latest['jobs']['bilibili']['version'] > bilibili_config['version']:
+                print(
+                    f"检测到最新的脚本版本号为{config_latest['jobs']['bilibili']['version']}，当前脚本版本号：{bilibili_config['version']}")
+            else:
+                print('当前脚本为最新版本')
+        else:
+            print('未获取到最新脚本的版本号')
+    except:
+        print('程序运行异常，跳过脚本版本检测...')
     if bilibili_config['enable']:
         # 获取config.yml账号信息
         accounts = bilibili_config['parameters']['ACCOUNTS']
@@ -78,7 +100,8 @@ def bilibili():
             }
             utc_datetime, beijing_datetime = get_standard_time()
             symbol = '=' * 16
-            print(f'\n{symbol}【bilibili】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
+            print(
+                f'\n{symbol}【bilibili】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
 
             start_time = time.time()
             title = f'☆【bilibili】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
@@ -98,12 +121,13 @@ def bilibili():
                 try:
                     # 推送消息
                     notify.send(title=title, content=content, notify_mode=notify_mode)
-                except TypeError:
+                except:
                     print('请确保配置文件的对应的脚本任务中，参数 notify_mode 下面有推送方式\n')
             else:
-                print('未进行消息推送，原因：未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数 notify 的值为 true\n')
+                print('未进行消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数 notify 的值为 true\n')
     else:
         print('未执行该任务，如需执行请在配置文件的对应的任务中，将参数 enable 设置为 true\n')
+
 
 def main():
     bilibili()
