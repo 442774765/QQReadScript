@@ -428,6 +428,8 @@ def qq_read():
             title = f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
             content = ''
 
+            # 调用 track 接口，为保障输出美观，输出信息写在后面
+            track_result = track(headers=headers, body=body)
             # 获取用户信息（昵称）
             user_info = get_user_info(headers=headers)
             if user_info:
@@ -532,7 +534,6 @@ def qq_read():
             else:
                 content += f'\n【阅读时长】已达到设置的对大阅读时长，故不增加阅读时长'
 
-            track_result = track(headers=headers, body=body)
             if track_result:
                 content += f'\n【数据跟踪】跟踪成功！'
             else:
