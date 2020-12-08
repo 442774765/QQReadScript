@@ -30,6 +30,6 @@
 ## 支持的脚本任务
 ### 企鹅读书 
 * 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py  
-* 教程网址：https://raw.githubusercontent.com/TNanko/Scripts/master/docs/qq_read.md
+* 教程网址：https://github.com/TNanko/Scripts/blob/master/docs/qq_read.md
 ### `bilibili` 签到 
 * 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/bilibili.py

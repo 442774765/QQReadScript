@@ -8,27 +8,7 @@
 # @Software: PyCharm
 """
 此脚本使用 Python 语言根据 https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js 改写
-需要自行使用代理软件获取 书籍 url ， headers 和 body
-1. MitM 添加 hostname=mqqapi.reader.qq.com
-2. 添加改写
-    圈x
-    #企鹅读书获取更新body
-    https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track url script-request-body https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js
-    #企鹅读书获取时长cookie
-    https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? url script-request-header https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js
-
-    loon
-    //企鹅读书获取更新body
-    http-request https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,requires-body=true, tag=企鹅读书获取更新body
-    //企鹅读书获取时长cookie
-    http-request https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid? script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js, requires-header=true, tag=企鹅读书获取时长cookie
-
-    surge
-    //企鹅读书获取更新body
-    企鹅读书获取更新body = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/log\/v4\/mqq\/track,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,
-    //企鹅读书获取时长cookie
-    企鹅读书获取时长cookie = type=http-request,pattern=https:\/\/mqqapi\.reader\.qq\.com\/mqq\/addReadTimeWithBid?,script-path=https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js,
-3. 进书库选择一本书，看10秒以下，然后退出，获取书籍 url 和 headers 以及 body，看书一定不能超过10秒， 将获取到的值对应填入配置文件里面的 BOOK_URL，HEADERS 和 BODY （注意冒号后面的空格，不要带引号！）
+使用教程 https://github.com/TNanko/Scripts/blob/master/docs/qq_read.md
 """
 
 import sys
