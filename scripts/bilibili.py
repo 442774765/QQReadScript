@@ -113,6 +113,7 @@ def bilibili():
                 content += f"【bilibili】签到失败！说明：{sign_result['message']}"
 
             content += f'\n🕛耗时：%.2f秒' % (time.time() - start_time)
+            content += f'\n如果帮助到您可以点下🌟STAR鼓励我一下，谢谢~'
             print(title)
             print(content)
             if bilibili_config['notify']:

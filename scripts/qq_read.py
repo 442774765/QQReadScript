@@ -370,7 +370,10 @@ def track(headers, body):
     """
     try:
         url = 'https://mqqapi.reader.qq.com/log/v4/mqq/track'
-        response = requests.post(url=url, headers=headers, data=json.dumps(body)).json()
+        timestamp = re.compile(r'"dis": (.*?),')
+        body = json.dumps(body)
+        body = re.sub(timestamp.findall(body)[0], str(int(time.time() * 1000)), str(body))
+        response = requests.post(url=url, headers=headers, data=body).json()
         if response['code'] == 0:
             return True
         else:
@@ -428,7 +431,7 @@ def qq_read():
             title = f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
             content = ''
 
-            # 调用 track 接口，为保障输出美观，输出信息写在后面
+            # 调用 track 接口，为保证输出结果美观，输出信息写在后面
             track_result = track(headers=headers, body=body)
             # 获取用户信息（昵称）
             user_info = get_user_info(headers=headers)
@@ -534,12 +537,14 @@ def qq_read():
             else:
                 content += f'\n【阅读时长】已达到设置的对大阅读时长，故不增加阅读时长'
 
+            # track(headers, body)的输出信息
             if track_result:
                 content += f'\n【数据跟踪】跟踪成功！'
             else:
                 content += f'\n【数据跟踪】跟踪失败！请重新抓取你的参数 body '
 
             content += f'\n🕛耗时：%.2f秒' % (time.time() - start_time)
+            content += f'\n如果帮助到您可以点下🌟STAR鼓励我一下，谢谢~'
             print(title)
             print(content)
             # 每天 22:00 - 22:10 发送消息推送
