@@ -13,6 +13,7 @@
 
 import sys
 import os
+
 cur_path = os.path.abspath(os.path.dirname(__file__))
 root_path = os.path.split(cur_path)[0]
 sys.path.append(root_path)
@@ -341,6 +342,7 @@ def read_books(headers, book_url, upload_time):
         print(traceback.format_exc())
         return
 
+
 def track(headers, body):
     """
     数据追踪，解决1金币问题
@@ -361,6 +363,26 @@ def track(headers, body):
     except:
         print(traceback.format_exc())
         return
+
+
+def get_red_packets(headers, pn):
+    """
+    今日金币统计
+    :param headers:
+    :param pn: 金币列表序号
+    :return:
+    """
+    try:
+        url = f'https://mqqapi.reader.qq.com/mqq/red_packet/user/trans/list?pn={pn}'
+        response = requests.get(url=url, headers=headers).json()
+        if response['code'] == 0:
+            return response['data']
+        else:
+            return
+    except:
+        print(traceback.format_exc())
+        return
+
 
 def qq_read():
     config_latest, config_current = read()
@@ -421,6 +443,25 @@ def qq_read():
             daily_tasks = get_daily_tasks(headers=headers)
             if daily_tasks:
                 content += f'\n【金币余额】剩余{daily_tasks["user"]["amount"]}金币，可提现{daily_tasks["user"]["amount"] // 10000}元'
+            # 查询今日获得金币数量
+            beijing_datetime_0 = beijing_datetime.strftime('%Y-%m-%d') + ' 00:00:00'
+            today_coins_total = 0
+            is_today_red_packet = True
+            for pn in range(1, 15):
+                red_packets = get_red_packets(headers=headers, pn=pn)
+                if red_packets and is_today_red_packet:
+                    for red_packet in red_packets['list']:
+                        if red_packet['content'] >= beijing_datetime_0:
+                            today_coins_total += red_packet['amount']
+                        else:
+                            is_today_red_packet = False
+                            break
+                elif not red_packets:
+                    content += f'\n【今日累计】请求接口错误！'
+                    break
+                else:
+                    content += f"\n【今日累计】{today_coins_total}金币，约{'{:4.2f}'.format(today_coins_total / 10000)}元"
+                    break
             # 查询本周阅读时长
             week_read_time = get_week_read_time(headers=headers)
             if week_read_time:
