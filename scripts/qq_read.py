@@ -440,11 +440,6 @@ def qq_read():
     # 消息推送方式
     notify_mode = qq_read_config['notify_mode']
 
-    utc_datetime, beijing_datetime = get_standard_time()
-    if beijing_datetime.hour == 0 and beijing_datetime.minute <= 10:
-        notify.send(title=f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆',
-                    content='请去QQ企鹅读书小程序中手动开一次宝箱或者看视频！', notify_mode=notify_mode)
-
     # 确定脚本是否开启执行模式
     if qq_read_config['enable']:
         for account in accounts:
@@ -593,8 +588,8 @@ def qq_read():
             else:
                 content += f'\n【数据跟踪】跟踪失败！请重新抓取你的参数 body '
 
-            # 获取提现信息
             if withdraw:
+                # 获取提现信息
                 withdraw_info = get_withdraw_info(headers=headers)
                 transform_info = []
                 if withdraw_info:
