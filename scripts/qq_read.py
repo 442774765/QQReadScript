@@ -44,7 +44,7 @@ def get_user_info(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/user/init'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -62,7 +62,7 @@ def get_daily_beans(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/sign_in/user'
     try:
-        response = requests.post(url=url, headers=headers).json()
+        response = requests.post(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -80,7 +80,7 @@ def get_daily_tasks(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/page?fromGuid='
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             # print('获取今日任务')
             # pretty_dict(response['data'])
@@ -100,7 +100,7 @@ def get_today_read_time(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/page/config?router=%2Fpages%2Fbook-read%2Findex&options='
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         # print('今日阅读')
         # pretty_dict(response)
         if response['code'] == 0:
@@ -121,7 +121,7 @@ def read_time_reward_tasks(headers, seconds):
     """
     url = f'https://mqqapi.reader.qq.com/mqq/red_packet/user/read_time_reward?seconds={seconds}'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         # print('阅读奖励')
         # pretty_dict(response)
         if response['code'] == 0:
@@ -141,7 +141,7 @@ def get_week_read_time(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/v1/bookShelfInit'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         # print('周阅读时长')
         # pretty_dict(response)
         if response['code'] == 0:
@@ -161,7 +161,7 @@ def read_now(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/read_book'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         # pretty_dict(response)
         if response['code'] == 0:
             return response['data']
@@ -181,7 +181,7 @@ def read_tasks(headers, seconds):
     """
     url = f'https://mqqapi.reader.qq.com/mqq/red_packet/user/read_time?seconds={seconds}'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -199,7 +199,7 @@ def daily_sign(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/clock_in/page'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -217,7 +217,7 @@ def watch_daily_sign_ads(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/clock_in_video'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         time.sleep(3)
         if response['code'] == 0:
             return response['data']
@@ -236,7 +236,7 @@ def watch_videos(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/watch_video'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -254,7 +254,7 @@ def open_treasure_box(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/treasure_box'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         time.sleep(15)
         if response['code'] == 0:
             return response['data']
@@ -273,7 +273,7 @@ def watch_treasure_box_ads(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/treasure_box_video'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         time.sleep(15)
         if response['code'] == 0:
             return response['data']
@@ -292,7 +292,7 @@ def get_week_read_tasks(headers):
     """
     url = 'https://mqqapi.reader.qq.com/mqq/pickPackageInit'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -311,7 +311,7 @@ def get_week_read_reward(headers, read_time):
     """
     url = f'https://mqqapi.reader.qq.com/mqq/pickPackage?readTime={read_time}'
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         # print(f'领取周阅读奖励({read_time})')
         # pretty_dict(response)
         if response['code'] == 0:
@@ -333,7 +333,7 @@ def read_books(headers, book_url, upload_time):
     url = re.sub(findtime.findall(book_url)[0], str(upload_time * 60 * 1000), str(book_url))
     # url = book_url.replace('readTime=', 'readTime=' + str(upload_time))
     try:
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return True
         else:
@@ -355,7 +355,7 @@ def track(headers, body):
         timestamp = re.compile(r'"dis": (.*?),')
         body = json.dumps(body)
         body = re.sub(timestamp.findall(body)[0], str(int(time.time() * 1000)), str(body))
-        response = requests.post(url=url, headers=headers, data=body).json()
+        response = requests.post(url=url, headers=headers, data=body, timeout=(5, 10)).json()
         if response['code'] == 0:
             return True
         else:
@@ -374,7 +374,7 @@ def get_red_packets(headers, pn):
     """
     try:
         url = f'https://mqqapi.reader.qq.com/mqq/red_packet/user/trans/list?pn={pn}'
-        response = requests.get(url=url, headers=headers).json()
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
         if response['code'] == 0:
             return response['data']
         else:
@@ -382,6 +382,32 @@ def get_red_packets(headers, pn):
     except:
         print(traceback.format_exc())
         return
+
+
+def get_withdraw_info(headers):
+    try:
+        url = 'https://mqqapi.reader.qq.com/mqq/red_packet/user/withdraw/page'
+        response = requests.get(url=url, headers=headers, timeout=(5, 10)).json()
+        if response['code'] == 0:
+            return response['data']['configList']
+        else:
+            return
+    except:
+        print(traceback.format_exc())
+        return
+
+
+def withdraw_to_wallet(headers, amount):
+    try:
+        url = f"https://mqqapi.reader.qq.com/mqq/red_packet/user/withdraw?amount={amount}"
+        response = requests.post(url=url, headers=headers, timeout=(5, 10)).json()
+        if response['data']['code'] == 0:
+            return True
+        else:
+            return response['data']['msg']
+    except:
+        print(traceback.format_exc())
+        return '访问提现接口错误！'
 
 
 def qq_read():
@@ -425,9 +451,12 @@ def qq_read():
             book_url = account['BOOK_URL']
             headers = account['HEADERS']
             body = account['BODY']
+            withdraw = account['WITHDRAW']
+            hosting_mode = account['HOSTING_MODE']
             utc_datetime, beijing_datetime = get_standard_time()
             symbol = '=' * 16
-            print(f'\n{symbol}【企鹅读书】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
+            print(
+                f'\n{symbol}【企鹅读书】{utc_datetime.strftime("%Y-%m-%d %H:%M:%S")}/{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} {symbol}\n')
 
             start_time = time.time()
             title = f'☆【企鹅读书】{beijing_datetime.strftime("%Y-%m-%d %H:%M:%S")} ☆'
@@ -457,10 +486,10 @@ def qq_read():
                             is_today_red_packet = False
                             break
                 elif not red_packets:
-                    content += f'\n【今日累计】请求接口错误！'
+                    content += f'\n【今日收益】请求接口错误！'
                     break
                 else:
-                    content += f"\n【今日累计】{today_coins_total}金币，约{'{:4.2f}'.format(today_coins_total / 10000)}元"
+                    content += f"\n【今日收益】{today_coins_total}金币，约{'{:4.2f}'.format(today_coins_total / 10000)}元"
                     break
             # 查询本周阅读时长
             week_read_time = get_week_read_time(headers=headers)
@@ -564,6 +593,74 @@ def qq_read():
             else:
                 content += f'\n【数据跟踪】跟踪失败！请重新抓取你的参数 body '
 
+            # 获取提现信息
+            if withdraw:
+                withdraw_info = get_withdraw_info(headers=headers)
+                transform_info = []
+                if withdraw_info:
+                    for i in withdraw_info:
+                        if i['amount'] == 6000:
+                            transform_info.append({
+                                'amount': i['amount'],
+                                'withdraw_time': 1
+                            })
+                        elif i['amount'] == 10000 or i['amount'] == 20000:
+                            withdraw_time = re.findall('\d+', i['tipText'])
+                            transform_info.append({
+                                'amount': i['amount'],
+                                'withdraw_time': int(withdraw_time[0])
+                            })
+                        else:
+                            transform_info.append({
+                                'amount': i['amount'],
+                                'withdraw_time': 999
+                            })
+
+                # 提现
+                if withdraw and beijing_datetime.hour == 23:
+                    if hosting_mode:
+                        # 先把0.6元提现了
+                        if daily_tasks["user"]["amount"] >= 6000 and transform_info[0]['amount'] == 6000 and \
+                                transform_info[0]['withdraw_time'] > 0:
+                            withdraw_result = withdraw_to_wallet(headers=headers, amount=6000)
+                            if withdraw_result == True:
+                                content += f'\n【托管提现】提现0.6元成功！'
+                                # 提现成功后，如果 notify 打开就发推送
+                                if qq_read_config['notify']:
+                                    notify.send(title=title, content=f"【托管提现】提现0.6元成功！",
+                                                notify_mode=notify_mode)
+                            else:
+                                content += f'\n【托管提现】提现失败！原因：{withdraw_result}'
+                        elif daily_tasks["user"]["amount"] >= 10000:
+                            transform_info.reverse()  # 提现尝试 大额度->小额度
+                            for i in transform_info:
+                                if daily_tasks["user"]["amount"] >= i['amount'] and i['withdraw_time'] > 0:
+                                    withdraw_result = withdraw_to_wallet(headers=headers, amount=i['amount'])
+                                    if withdraw_result == True:
+                                        content += f"\n【托管提现】提现{i['amount'] // 10000}元成功！"
+                                        if qq_read_config['notify']:
+                                            notify.send(title=title, content=f"【托管提现】提现{i['amount'] // 10000}元成功！", notify_mode=notify_mode)
+                                    else:
+                                        content += f'\n【托管提现】提现失败！原因：{withdraw_result}'
+                                    break
+                        else:
+                            content += f'\n【托管提现】余额不足或低金额提现次数耗尽，无法提现！'
+                    else:
+                        if daily_tasks["user"]["amount"] >= 100000:
+                            withdraw_result = withdraw_to_wallet(headers=headers, amount=100000)
+                            if withdraw_result:
+                                content += f'\n【满额提现】提现10元成功！'
+                                if qq_read_config['notify']:
+                                    notify.send(title=title, content=f"【满额提现】提现10元成功！", notify_mode=notify_mode)
+                            else:
+                                content += f'\n【满额提现】提现失败！原因：{withdraw_result}'
+                        else:
+                            content += f'\n【满额提现】余额不足10元，未打开托管模式，不提现！'
+                else:
+                    content += f'\n【自动提现】未到23点'
+            else:
+                content += f'\n【自动提现】未启用该功能'
+
             content += f'\n🕛耗时：%.2f秒' % (time.time() - start_time)
             content += f'\n如果帮助到您可以点下🌟STAR鼓励我一下，谢谢~'
             print(title)
@@ -573,7 +670,7 @@ def qq_read():
                 notify.send(title=title, content=content, notify_mode=notify_mode)
             elif not qq_read_config['notify']:
                 print('未进行消息推送，原因：未设置消息推送。如需发送消息推送，请确保配置文件的对应的脚本任务中，参数notify的值为true\n')
-            elif not beijing_datetime.hour == 0:
+            elif not beijing_datetime.hour == 22:
                 print('未进行消息推送，原因：没到对应的推送时间点\n')
             else:
                 print('未在规定的时间范围内\n')

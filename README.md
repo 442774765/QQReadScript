@@ -9,10 +9,10 @@
 * `git clone https://github.com/TNanko/Scripts.git`
 * 确保你的 `vps` 里面安装 `python3` ，没有安装则运行 `apt-get install python3 -y`(Ubuntu/Debian) 或者 `yum install python3 -y`(Centos) 命令来安装 `python3`
 * 安装脚本所需要的包 `pip3 install -r requirements.txt`
-* 复制文件夹 `config` 下的 `config.yml.example` 文件并将文件命名为 `config.yml` （`cp config.yml.example config.yml`）。使用 `vi` 或者文本编辑器编辑文件 `config.yml` 填写配置  
+* 进入到 `config` 文件夹下（`cd config`） ，复制文件夹 `config` 下的 `config.yml.example` 文件并将文件命名为 `config.yml` （`cp config.yml.example config.yml`）。使用 `vi` 或者文本编辑器编辑文件 `config.yml` 填写配置  
 * 在配置文件中填写对应的推送方式的 `key` 或者 `code`  
 * 找到想要运行的脚本，设置对应的配置信息  
-* 运行脚本 `python3 ./scripts/xxx.py`
+* 返回到 `Scripts` 目录下，运行脚本 `python3 ./scripts/xxx.py`
 * 最后就是自己添加定时任务，不会的百度 `Google`
 
 ### github action
