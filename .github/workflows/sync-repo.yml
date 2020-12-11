@@ -1,9 +1,12 @@
 name: 同步上游仓库
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
   watch:
     types: started
+  push:
+    branches: [ master ]
   repository_dispatch:
     types: sync-repo
 jobs:
@@ -23,5 +26,5 @@ jobs:
         with:
           source_repo: "https://github.com/TNanko/Scripts.git"
           source_branch: "master"
-          destination_branch: "main"
+          destination_branch: "master"
           github_token: ${{ secrets.PAT }}

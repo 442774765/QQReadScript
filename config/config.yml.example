@@ -28,7 +28,7 @@ jobs:
   qq_read:
     # 使用前请阅读 https://github.com/TNanko/Scripts/blob/master/docs/qq_read.md
     enable: false # true 启用脚本； false 不启用脚本（默认不启用脚本）
-    version: 1.3.1
+    version: 1.3.2
     skip_check_script_version: false # 默认不跳过版本检测
     notify: false # true 启用消息推送； false 不启用消息推送（默认不发消息推送）
     notify_mode:  # 如果全都配置了，可以根据自身需求进行消息推送方式的选择，不需要的可以注释掉或者删除。由于 bark 消息长度的限制，不推荐 bark
@@ -43,7 +43,7 @@ jobs:
         - HEADERS:
           BODY:
           BOOK_URL:
-          WITHDRAW: false # 默认不启用提现功能（模式：满额提现，每天23点以后开始尝试提现，每次提现10元，不满10元不提现，不使用2元和1元提现次数）
+          WITHDRAW: false # 默认不启用提现功能，启用前必须保证账号已经实名认证（模式：满额提现，每天23点以后开始尝试提现，每次提现10元，不满10元不提现，不使用2元和1元提现次数）
           HOSTING_MODE: false # 默认不启用托管提现，若启用则必须在 WITHDRAW 为 true 下才有效（模式：托管提现，建议放弃薅此羊毛时候打开，将使用剩余的2元和1元提现次数将剩余金币最大程度转化为rmb）
   bilibili:
     # 使用前请阅读 https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/bilibil.py 前12行使用说明

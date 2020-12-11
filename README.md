@@ -28,8 +28,8 @@
 打开推送方式：将 `config.yml` 里面 `notify` 选项中，参数 `enable` 设置为 `true`    
 
 ## 支持的脚本任务
-### 企鹅读书 
-* 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py  
-* 教程网址：https://github.com/TNanko/Scripts/blob/master/docs/qq_read.md
+### 企鹅读书
+* 使用脚本前务必看一遍教程，[脚本地址](https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/qq_read.py)，[使用教程](https://github.com/TNanko/Scripts/blob/master/docs/qq_read.md)
+* 此脚本使用 `Python` 语言根据[原js脚本](https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js)重写，并在原有的基础上扩展了一些功能
 ### `bilibili` 签到 
 * 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/bilibili.py
