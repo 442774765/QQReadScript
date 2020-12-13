@@ -33,3 +33,9 @@
 * 此脚本使用 `Python` 语言根据[原js脚本](https://raw.githubusercontent.com/ziye12/JavaScript/master/Task/qqreads.js)重写，并在原有的基础上扩展了一些功能
 ### `bilibili` 签到 
 * 脚本地址：https://raw.githubusercontent.com/TNanko/Scripts/master/scripts/bilibili.py
+
+## 关于版本
+### 配置文件的版本
+x.y.z x每增加一个数字，表示代码框架发生重大变化；y每增加一个数字，表示增加一个新的脚本；z每增加一个数字，表示修复某个脚本的bug
+### 脚本的版本
+x.y.z x每增加一个数字，大概率是脚本重写了；y每增加一个数字，表示增加一个新的功能；z每增加一个数字，表示增加修复该脚本的一个bug

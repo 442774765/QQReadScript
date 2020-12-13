@@ -403,6 +403,9 @@ def withdraw_to_wallet(headers, amount):
         response = requests.post(url=url, headers=headers, timeout=30).json()
         if response['data']['code'] == 0:
             return True
+        # 实名认证检测
+        # elif response['data']['code'] == -300 and response['data']['msg'] == 'REALNAME_CHECK_ERROR':
+        #     return f"{response['data']['msg']}，请前去QQ进行实名认证！"
         else:
             return response['data']['msg']
     except:
@@ -588,7 +591,7 @@ def qq_read():
             else:
                 content += f'\n【数据跟踪】跟踪失败！请重新抓取你的参数 body '
 
-            if withdraw:
+            if withdraw and user_info:
                 # 获取提现信息
                 withdraw_info = get_withdraw_info(headers=headers)
                 transform_info = []
@@ -622,7 +625,7 @@ def qq_read():
                                 content += f'\n【托管提现】提现0.6元成功！'
                                 # 提现成功后，如果 notify 打开就发推送
                                 if qq_read_config['notify']:
-                                    notify.send(title=title, content=f"【托管提现】提现0.6元成功！",
+                                    notify.send(title=title, content=f"【托管提现】账号{user_info['user']['nickName']}提现0.6元成功！",
                                                 notify_mode=notify_mode)
                             else:
                                 content += f'\n【托管提现】提现失败！原因：{withdraw_result}'
@@ -634,7 +637,7 @@ def qq_read():
                                     if withdraw_result == True:
                                         content += f"\n【托管提现】提现{i['amount'] // 10000}元成功！"
                                         if qq_read_config['notify']:
-                                            notify.send(title=title, content=f"【托管提现】提现{i['amount'] // 10000}元成功！", notify_mode=notify_mode)
+                                            notify.send(title=title, content=f"【托管提现】账号{user_info['user']['nickName']}提现{i['amount'] // 10000}元成功！", notify_mode=notify_mode)
                                     else:
                                         content += f'\n【托管提现】提现失败！原因：{withdraw_result}'
                                     break
@@ -646,7 +649,7 @@ def qq_read():
                             if withdraw_result == True:
                                 content += f'\n【满额提现】提现10元成功！'
                                 if qq_read_config['notify']:
-                                    notify.send(title=title, content=f"【满额提现】提现10元成功！", notify_mode=notify_mode)
+                                    notify.send(title=title, content=f"【满额提现】账号{user_info['user']['nickName']}提现10元成功！", notify_mode=notify_mode)
                             else:
                                 content += f'\n【满额提现】提现失败！原因：{withdraw_result}'
                         else:
