@@ -1,7 +1,7 @@
 name: "Buildx Scripts Image"
 on:
-  watch:
-    types: [started]
+  release:
+    types: [published]
 jobs:
   build:
       runs-on: ubuntu-latest
