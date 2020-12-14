@@ -19,7 +19,9 @@ ENV HOME=/root \
     PS1="\u@\h:\w \$ " \
     SCRIPTS_DIR="/Scripts" \
     ENABLE_QQREAD_CRONTAB=false \
+    QQREAD_CRONTAB="*/10 * * * *" \
     ENABLE_BILIBILI_CRONTAB=false \
+    BILIBILI_CRONTAB="15 8 * * *" \
     RM_LOG_DAYS_BEFORE=7
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 777 /usr/local/bin/entrypoint.sh \
