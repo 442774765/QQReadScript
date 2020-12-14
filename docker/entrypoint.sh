@@ -13,6 +13,8 @@ echo "25 4 * * 6 chmod +x ${SCRIPTS_DIR}/docker/rm_log.sh && bash ${SCRIPTS_DIR}
 crontab /tmp/crontab.list
 rm -f /tmp/crontab.list
 
-python3
+if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ]; then
+  set -- python3 "$@"
+fi
 
 exec "$@"
