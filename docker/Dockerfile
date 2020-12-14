@@ -22,7 +22,7 @@ ENV HOME=/root \
     ENABLE_BILIBILI_CRONTAB=false \
     RM_LOG_DAYS_BEFORE=7
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod 777 /entrypoint.sh \
+RUN chmod 777 /usr/local/bin/entrypoint.sh \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple \
