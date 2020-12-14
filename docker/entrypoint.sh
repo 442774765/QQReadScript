@@ -12,8 +12,9 @@ echo "25 4 * * 6 { DateDelLog=$(date \"+%Y-%m-%d" -d "${RM_LOG_DAYS_BEFORE} days
 crontab /tmp/crontab.list
 rm -f /tmp/crontab.list
 
-if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ]; then
-  set -- python3 "$@"
-fi
+# if [ "${1#-}" != "${1}" ] || [ -z "$(command -v "${1}")" ]; then
+#   set -- python3 "$@"
+# fi
+python3
 
 exec "$@"
