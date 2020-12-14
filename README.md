@@ -28,7 +28,7 @@
 
 * 最后就是自己添加定时任务，不会的百度 `Google`。
 
-### github action
+### 二、github action
 
 * 添加一个 `secrets` - `CONFIG` ， `Value` 内容请复制目录下 `./config/config.yml.example` 所有内容。
 
@@ -40,7 +40,7 @@
 
 * 定时同步仓库：添加一个 `secrets` - `PAT` ，[教程](https://www.jianshu.com/p/bb82b3ad1d11)。
 
-### Docker
+### 三、Docker
 
 1. 下载本仓库`config`文件夹下的`config.yml.example`文件到指定位置，并改名为`config.yml`，比如下载到`/appdata/tnanko`文件下，可如下操作：
 
@@ -69,9 +69,9 @@
 | 序号 | 变量名               | 可以设置的值 | 默认值    | 说明                                                                                    |
 | ---- | ----------------------- | ---------------- | ------------ | ----------------------------------------------------------------------------------------- |
 | 1    | ENABLE_QQREAD_CRONTAB   | true/false       | false        | 是否启用qq_read的定时任务，注意这里和config.yml中qq_read均设置为true，定时任务才会运行。 |
-| 2    | QQREAD_CRONTAB          | 5位的crontab格式 | */10 * * * * | 没啥好说的，你想啥时候运行qq_read，ENABLE_QQREAD_CRONTAB设置为true时，本项设置才会生效。**需要加双引号。** |
+| 2    | QQREAD_CRONTAB          | 5位的crontab格式 | */10 * * * * | 没啥好说的，你想啥时候运行qq_read，ENABLE_QQREAD_CRONTAB设置为true时，本项设置才会生效。**按上述部署容器的命令时需要加双引号。** |
 | 3    | ENABLE_BILIBILI_CRONTAB | true/false       | false        | 是否启用bilibili的定时任务，注意这里和config.yml中bilibili均设置为true，定时任务才会运行。 |
-| 4    | BILIBILI_CRONTAB        | 5位的crontab格式 | 15 8 * * * | 没啥好说的，你想啥时候运行bilibili，ENABLE_BILIBILI_CRONTAB设置为true时，本项设置才会生效。**需要加双引号。** |
+| 4    | BILIBILI_CRONTAB        | 5位的crontab格式 | 15 8 * * * | 没啥好说的，你想啥时候运行bilibili，ENABLE_BILIBILI_CRONTAB设置为true时，本项设置才会生效。**按上述部署容器的命令时需要加双引号。** |
 | 5    | RM_LOG_DAYS_BEFORE      | 正整数        | 7            | 每周六凌晨4:25分自动删除指定时间以前的日志，默认为7天，如需要修改为其他天数，请自定义。 |
 
 4. 完成，等着收钱吧。
