@@ -84,6 +84,14 @@
     # 然后编辑/appdata/tnanko/config.new.yml这个文件，可以参考你原来的config.yml这个文件复制过来，再补充新的设置即可，修改好后再运行下面命令
     mv config.new.yml config.yml
     ```
+6. 如果你想自动更新`tnanko_scripts`容器，请安装watchtower：
+
+    ```shell
+    docker run -d \
+    --name watchtower \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    containrrr/watchtower
+    ```
 
 ## 消息推送
 
