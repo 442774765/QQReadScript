@@ -49,9 +49,9 @@
     wget --no-check-certificate https://raw.githubusercontent.com/TNanko/Scripts/master/config/config.yml.example -O config.yml
     ```
 
-2. 修改`config.yml`，如何修改请见该文件注释，写完配置文件后在[在线检验yaml语法](https://www.toolfk.com/tool-format-yaml)检验一下 `yaml` 语法是否规范，当然你可以百度 `Google` 其他的在线检验网站。
+2. 修改刚刚下载好的`config.yml`，如何修改请见 [教程](docs/qq_read.md)，写完配置文件后在[在线检验yaml语法](https://www.toolfk.com/tool-format-yaml)检验一下 `yaml` 语法是否规范，当然你可以百度 `Google` 其他的在线检验网站。
 
-3. 部署容器，以上述举例的`/appdata/tnanko`为例：
+3. 自行安装好Docker后部署容器，以刚刚修改的配置文件的路径`/appdata/tnanko`为例：
 
     ```shell
     docker run -dit \
@@ -64,7 +64,7 @@
     evinedeng/tnanko_scripts
     ```
 
-    总共有以下5个环境变量供选择，如不想使用默认值，请参考上述命令中`-e ENABLE_QQREAD_CRONTAB=true`这一行的形式添加到部署容器的命令中：
+    总共有以下5个环境变量供选择，你不设置就使用默认值，如不想使用默认值，请参考上述命令中`-e ENABLE_QQREAD_CRONTAB=true`这一行的形式添加到部署容器的命令中：
 
 | 序号 | 变量名               | 可以设置的值 | 默认值    | 说明                                                                                    |
 | ---- | ----------------------- | ---------------- | ------------ | ----------------------------------------------------------------------------------------- |
