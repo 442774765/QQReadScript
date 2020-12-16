@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[ ! -d ${SCRIPTS_DIR}/log ] && mkdir -p /root/log
+[ ! -d ${SCRIPTS_DIR}/log ] && mkdir -p ${SCRIPTS_DIR}/log
 crond
 
 [ -f /tmp/crontab.list ] && rm -f /tmp/crontab.list
